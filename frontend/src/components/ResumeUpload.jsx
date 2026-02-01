@@ -1,3 +1,6 @@
+//Handles client-side resume file selection and uploads it to the backend.
+//Acts as the entry point for resume data into the AI analysis pipeline.
+
 import { useState } from "react";
 import api from "../api/client";
 

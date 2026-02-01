@@ -1,3 +1,7 @@
+//Acts as the main page and layout coordinator for the app.
+//Holds shared state (jd) and wires ResumeUpload, JDInput, and QueryBox together.
+
+
 import ResumeUpload from "../components/ResumeUpload";
 import JDInput from "../components/JDInput";
 import QueryBox from "../components/QueryBox";

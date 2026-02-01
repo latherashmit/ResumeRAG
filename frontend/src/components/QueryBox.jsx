@@ -1,3 +1,7 @@
+//Accepts a user query and sends it along with the JD to the backend for AI analysis.
+//Displays loading state and renders the AI-generated feedback.
+
+
 import { useState } from "react";
 import api from "../api/client";
 
