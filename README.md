@@ -142,18 +142,3 @@ Frontend runs at: `http://localhost:5173`
 * Authentication & user profiles
 
 ---
-
-## 📣 Interview Pitch
-
-> “I built a full-stack RAG system where resumes are embedded and semantically matched against job descriptions using Gemini embeddings and ChromaDB, enabling intelligent skill gap analysis and resume optimization.”
-
----
-
-## 👤 Author
-
-**Ashmit Lather**
-AI / ML | RAG Systems | Full-Stack Projects
-
----
-
-⭐ If you find this project useful, consider giving it a star!
