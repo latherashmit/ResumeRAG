@@ -1,8 +1,15 @@
+import os
+
 from fastapi import APIRouter, UploadFile, File
+from dotenv import load_dotenv
+import google.generativeai as genai
 from app.rag.parser import parse_document
 from app.rag.chunker import chunk_text
 from app.rag.embeddings import embed_and_store, query_embeddings
 from app.core.prompt import build_prompt
+
+load_dotenv()
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 router = APIRouter()
 
@@ -25,8 +32,7 @@ async def analyze_resume(query: str, jd: str):
         user_query=query
     )
 
-    from google.generativeai import GenerativeModel
-    model = GenerativeModel("gemini-pro")
+    model = genai.GenerativeModel("gemini-3-flash-preview")
     response = model.generate_content(prompt)
 
     return {"analysis": response.text}

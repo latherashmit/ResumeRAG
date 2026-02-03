@@ -1,17 +1,26 @@
 import os
-from google import genai
+from pathlib import Path
+
 from chromadb import Client
 from chromadb.config import Settings
+from dotenv import load_dotenv
+import google.generativeai as genai
 
 
-gemini_client = genai.Client(
-    api_key=os.getenv("GEMINI_API_KEY")
-)
+load_dotenv()
 
+api_key = os.getenv("GEMINI_API_KEY")
+if not api_key:
+    raise ValueError("GEMINI_API_KEY is not set in the environment.")
+
+genai.configure(api_key=api_key)
+
+chroma_path = Path(__file__).resolve().parent.parent / "vectorstore" / "chroma_db"
+chroma_path.mkdir(parents=True, exist_ok=True)
 
 chroma_client = Client(
     Settings(
-        persist_directory="app/vectorstore/chroma_db",
+        persist_directory=str(chroma_path),
         anonymized_telemetry=False
     )
 )
@@ -22,13 +31,12 @@ def embed_and_store(chunks, collection_name):
     )
 
     for idx, chunk in enumerate(chunks):
-        response = gemini_client.models.embed_content(
+        response = genai.embed_content(
             model="models/text-embedding-004",
-            contents=chunk
+            content=chunk
         )
 
-       
-        embedding = response.embedding
+        embedding = response["embedding"]
 
         collection.add(
             documents=[chunk],
@@ -41,9 +49,9 @@ def query_embeddings(query, collection_name, k=5):
         name=collection_name
     )
 
-    response = gemini_client.models.embed_content(
+    response = genai.embed_content(
         model="models/text-embedding-004",
-        contents=query
+        content=query
     )
 
     query_embedding = response["embedding"]
